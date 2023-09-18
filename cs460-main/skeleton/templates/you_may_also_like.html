@@ -1,0 +1,40 @@
+<!doctype html>
+
+
+{%if notenoughtags %}
+  <h1>Not enough tags to generate reccomendations</h1>
+{%else%}
+  <body>
+      <h1>You may also like these photos, based on your top tags: {{t3[0][0]}}  {{t3[1][0]}} {{t3[2][0]}}</h1>
+
+      <ul>
+        <h2>Exactly three tags in common </h2>
+        {% for photo in allphotos3 %}
+          <li><img src='data:image/jpg;base64, {{ base64.b64encode(photo[2]).decode("ascii") }}'/></li>
+        {% endfor %}
+      </ul>
+      <ul>
+        <h2>Exactly two tags in common </h2>
+        {% for photo in allphotos2 %}
+          <li><img src='data:image/jpg;base64, {{ base64.b64encode(photo[2]).decode("ascii") }}'/></li>
+        {% endfor %}
+      </ul>
+      <ul>
+        <h2>Exactly one tag in common</h2>
+        {% for photo in allphotos1 %}
+          <li><img src='data:image/jpg;base64, {{ base64.b64encode(photo[2]).decode("ascii") }}'/></li>
+        {% endfor %}
+      </ul>
+      
+      
+  </body>
+{% endif %}
+
+<p> Go to <a href='/profile'>profile?</a></p>
+<ul>
+    <li><a href='/upload'>Upload a photo</a> </li>
+    <li><a href='/friends'>Friends</a> </li>
+    <li><a href='/logout'>Logout</a></li>
+    <li><a href='/'>Home</a></li>
+    </ul>
+    

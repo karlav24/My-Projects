@@ -1,0 +1,21 @@
+
+<title> Search Results </title>
+<body>
+    {%if not matching_photos and not uid %}
+      <h1> {{Message}} </h1>
+    {%else%}
+    <h1>Search Results</h1>
+    <ul>
+      {% for photo in matching_photos %}
+        <li><img src='data:image/jpg;base64, {{ base64.b64encode(photo[2]).decode("ascii") }}'/></li>
+      {% endfor %}
+    </ul>
+</body>
+  {%endif%}
+
+<ul>
+  <li> Go to <a href='/profile'>profile?</a></li>
+  <li><a href='/upload'>Upload a photo</a> </li>
+  <li><a href='/logout'>Logout</a></li>
+  <li><a href='/'>Home</a></li>
+</ul>

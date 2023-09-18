@@ -1,0 +1,77 @@
+<!doctype html>
+
+
+
+
+
+<h2>Here is {{visitingname[0]}} {{visitingname[1]}}'s albums</h2>
+    <ul>
+    {% for album in albums %}
+        <!--Albums.album_id, Albums.aname, Pictures.picture_id, Pictures.caption, Pictures.imgdata-->
+        <li>
+        <form method="post" enctype="multipart/form-data" action="/viewAlbum">
+          <input type="hidden" name="viewAlbum" value="{{album[0]}}" />
+          <button type="submit" style="background-color:#FFA8BF; color:white; border:none;">
+             {{album[1]}} Visit Album 
+          </button>
+          </form>
+        </li>
+    {% endfor %}
+    </ul>
+
+
+
+{% if photos %}
+
+<h2>Here is {{visitingname[0]}} {{visitingname[1]}}'s photos</h2>
+    <ul>
+    {% for photo in photos %}
+        <li>Caption: {{photo[2]}}<br> <!--Album Number: {{photo[3]}} <br>--> Album: {{photo[4]}} <br>
+        <img src='data:image/jpg;base64, {{ base64.b64encode(photo[0]).decode("ascii") }}'/></li>
+
+        <form method="post" enctype="multipart/form-data" action="/like">
+            <input type="hidden" name="like" value="{{photo[1]}}" />
+            <button type="submit" style="background-color:#FFA8BF; color:white; border:none;">
+               like  {{photo[5]}}
+            </button>
+        </form> 
+    
+            
+
+         <form method="POST" action="/comment">
+            <label for="comment">Comment:</label>
+            <input type="hidden" name="clickedAccount" value="{{ search_term }}">
+            <input type="text" id="comment" name="comment"/>
+            <input type="hidden" name="picture" value="{{ photo[1] }}" />
+            <button type="submit">Post</button>
+          </form>
+         
+          <ul>
+          {% for comment in photo_comments[photo[1]] %}
+              <li>{{ comment[1] }} {{ comment[2] }}: {{ comment[0] }}</li>
+          {% endfor %}
+          </ul>
+      
+
+        </li>
+    {% endfor %}
+    </ul>
+
+{% else %}
+    <h1>{{visitingname[0]}} {{visitingname[1]}} has no photos yet :( </h1>
+{% endif %}
+
+
+
+{% if message is none %}
+  <p>You should <a href='/login'>login!</a></p>
+{% else %}
+  <p> Go to <a href='/profile'>profile?</a></p>
+{% endif %}
+
+<ul>
+<li><a href='/upload'>Upload a photo</a> </li>
+<li><a href='/friends'>Friends</a> </li>
+<li><a href='/logout'>Logout</a></li>
+<li><a href='/'>Home</a></li>
+</ul>

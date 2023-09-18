@@ -1,0 +1,8 @@
+<!doctype html>
+<h1> Comment Search Results </h1>
+<h2> Top Commenters </h2>
+{% for top in topCommenters %}
+    <ul>
+        <li> {{top[1]}} {{top[2]}} </li>
+    </ul>
+{% endfor %}

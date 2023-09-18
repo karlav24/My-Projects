@@ -1,0 +1,113 @@
+<!-- author ben lawson (balawson@bu.edu) -->
+<!doctype html>
+{% if message %}
+  <h4>{{message}}!</h4>
+{% endif %}
+<title>Photoshare</title>
+{% if name %}
+  <h1>Hello {{ name }}!</h1>
+{% endif %}
+
+<!DOCTYPE html>
+<form method="post" enctype="multipart/form-data" action="/commentSearch">
+    <input type="text" placeholder="Comment Search" name="commentSearch">
+    <input type="submit" value="Search Comment Keywords" />
+    </form>
+{% if toptags %}
+<h2>Top Tags</h2>
+{% endif %}
+  <ul>
+  {% for tag in toptags %}
+    <li> 
+      <form method="post" enctype="multipart/form-data" action="/searchall">
+      <input type="hidden" name="clickedTag" value="{{ tag[0] }}" />
+      <button type="submit" style="background-color:#FFA8BF; color:white; border:none;">
+        Tag: {{ tag[0] }}     Used {{tag[1]}} times
+      </button>
+      </form>
+    </li>
+
+  {% endfor %}
+  </ul>
+
+
+
+<div class="topnav">
+  <form method="post" enctype="multipart/form-data" action="/searchall">
+  <input type="text" placeholder="Search Everyone's Tags :)" name="searchALLTags">
+  <input type="submit" value="Search" />
+  </form>
+</div>
+ 
+
+
+
+<div class="topnav">
+  <form method="post" enctype="multipart/form-data" action="/search">
+  <input type="text" placeholder="Search your photo tags :)" name="searchYourTags">
+  <input type="submit" value="Search" />
+  </form>
+</div>
+<br>
+<form method="post" enctype="multipart/form-data" action="/you_may_also_like">
+  <input type="hidden" name="you_may_also_like" value="{{name}}" />
+  <button type="submit" style="background-color:#FFA8BF; color:white; border:none;">
+     You may also like....
+  </button>
+</form> 
+
+{% if albums %}
+  <h2>Here are your albums</h2>
+    <ul>
+    {% for album in albums %}
+        <!--Albums.al bum_id, Albums.aname, Pictures.picture_id, Pictures.caption, Pictures.imgdata-->
+        <li>
+        <form method="post" enctype="multipart/form-data" action="/viewAlbum">
+          <input type="hidden" name="viewAlbum" value="{{album[0]}}" />
+          <button type="submit" style="background-color:#FFA8BF; color:white; border:none;">
+             {{album[1]}} Visit Album 
+          </button>
+          </form>
+
+          <form method="post" enctype="multipart/form-data" action="/adelete">
+            <input type="hidden" name="adelete" value="{{album[0]}}" />
+            <button type="submit" style="background-color:#747474; color:white; border:none;">
+               delete album
+            </button>
+         </form> 
+        </li>
+    {% endfor %}
+    </ul>
+  {% endif %}
+
+{% if photos %}
+<h2>Here are your photos</h2>
+    <ul>
+    {% for photo in photos %}
+        <li>Caption: {{photo[2]}}<br> <!--Album Number: {{photo[3]}} <br>--> Album: {{photo[4]}} <br>
+        <img src='data:image/jpg;base64, {{ base64.b64encode(photo[0]).decode("ascii") }}'/></li>
+
+        <form method="post" enctype="multipart/form-data" action="/pdelete">
+          <input type="hidden" name="pdelete" value="{{photo[1]}}" />
+          <button type="submit" style="background-color:#FFA8BF; color:white; border:none;">
+             delete photo
+          </button>
+       </form> 
+    {% endfor %}
+    </ul>
+{% endif %}
+
+
+
+{% if message is none %}
+  <p>You should <a href='/login'>login!</a></p>
+{% else %}
+  <p> Go to <a href='/profile'>profile?</a></p>
+{% endif %}
+
+<ul>
+<li><a href='/upload'>Upload a photo</a> </li>
+<li><a href='/friends'>Friends</a> </li>
+<li><a href='/logout'>Logout</a></li>
+<li><a href='/'>Home</a></li>
+</ul>

@@ -1,0 +1,23 @@
+<!doctype html>
+
+<h1>Here is the album: {{aname}}</h1>
+
+{% if photos %}
+<h2>Photos in album {{aname}}</h2>
+    <ul>
+    {% for photo in photos %}
+        <li>Caption: {{photo[2]}}<br> <!--Album Number: {{photo[3]}} <br>--> Album: {{photo[4]}} <br>
+        <img src='data:image/jpg;base64, {{ base64.b64encode(photo[0]).decode("ascii") }}'/></li>
+    {% endfor %}
+    </ul>
+{% endif %}
+
+
+
+
+<ul>
+<li> Go to <a href='/profile'>profile?</a></li>
+<li><a href='/upload'>Upload a photo</a> </li>
+<li><a href='/logout'>Logout</a></li>
+<li><a href='/'>Home</a></li>
+</ul>

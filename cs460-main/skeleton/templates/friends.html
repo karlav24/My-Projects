@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+
+<h1> Your friends</h1>
+
+{% if friends %}
+    <ul>
+    {% for friend in friends %}
+        <!--Albums.album_id, Albums.aname, Pictures.picture_id, Pictures.caption, Pictures.imgdata-->
+        <li>{{friend[1]}} {{friend[2]}} <br>
+        </li>
+        
+    {% endfor %}
+    </ul>
+
+{% else %}
+    <p>No friends yet</p>
+{% endif %}
+
+
+<p>Search for Friends</p>
+
+<div class="topnav">
+    <form method="post" enctype="multipart/form-data" action="/searchUsers">
+    <input type="text" placeholder="Search for Users :)" name="searchUsers">
+    <input type="submit" value="Search 4 People" />
+    </form>
+  </div>
+
+  <form method="get" enctype="multipart/form-data" action="/friends">
+    <input type="hidden" name="friendButton" value="uid" />
+    <button type="submit" style="background-color:#f4c2c2; color:white; border:none;">
+        See Friend Recommendations
+    </button>
+    </form>
+
+    {% if recommendations %}
+    <h2>Friend Recommendations:</h2>
+    <ul>
+    {% for recommendation in recommendations %}
+        <li>{{ recommendation[0]}} (mutual friends)</li>
+    {% endfor %}
+    </ul>
+   {% else %}
+    <h2>No recommendations yet</h2>
+{% endif %}
+
+{% if users %}
+   <ul>
+   {% for friend in users %}
+       <!--Albums.album_id, Albums.aname, Pictures.picture_id, Pictures.caption, Pictures.imgdata-->
+       <li>{{friend[1]}} {{friend[2]}} <br>
+       </li>
+      
+   {% endfor %}
+   </ul>
+{% endif %}
+{%if not addFriends and not uid%} 
+    <p> log in to add friends </p>
+{%endif%}
+{% if userSearch %}
+    <h2> Results: </h2>
+    <ul>
+    {% for person in userSearch %}
+        <!--Albums.album_id, Albums.aname, Pictures.picture_id, Pictures.caption, Pictures.imgdata-->  
+       <li>{{person[0]}} {{person[1]}} <form method="post" enctype="multipart/form-data" action="/visitaccount">
+        <input type="hidden" name="clickedAccount" value="{{person[2]}}" />
+        <button type="submit" style="background-color:#FFA8BF; color:white; border:none;">
+            Visit account
+        </button>
+        </form>
+        {%if addFriend%}
+        <form method="post" enctype="multipart/form-data" action="/addFriend">
+            <input type="hidden" name="friendButton" value="{{person[2]}}" />
+            <button type="submit" style="background-color:#f4c2c2; color:white; border:none;">
+                Add Friend
+            </button>
+            </form>
+        {% endif %}
+      </li>
+    
+    {% endfor %}
+    </ul>
+ {% endif %}
+
+
+<h2>Menu</h2>
+ <ul>
+    <li><a href='/upload'>Upload a photo</a> </li>
+    <li><a href='/friends'>Friends</a> </li>
+    <li><a href='/logout'>Logout</a></li>
+    <li><a href='/'>Home</a></li>
+</ul>
