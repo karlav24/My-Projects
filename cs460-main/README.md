@@ -1,2 +1,1 @@
-# cs460
-cs460 pa1
+a website completed for the course CS460 at boston university. it is a site similar to instagram where you can upload photos, tag them and add friends. it is made with a flask backend and an html frontend 
